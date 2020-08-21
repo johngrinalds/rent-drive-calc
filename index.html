@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Rent vs. Drive Calc</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+        <style>
+
+            body {
+                font-family: 'Montserrat', serif;
+                background-image: url("https://skoda-motorsport.s3.amazonaws.com/com/2018/05/the-top-10-moments-from-more-than-half-a-century-of-le-mans-domination.jpeg");
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: 100% auto;
+                background-color: #cccccc;
+                
+            }
+
+            h1 {
+                font-size: 3em;
+                text-align: center;
+                padding: 10px;
+                border-left: none;
+                border-right: none;
+                border-radius: 5px;
+                margin: 20px;
+                color: black;
+                background-color: #c9e3f8;
+            }
+
+            h2 {
+                margin-left: 5px;
+                text-align: left;
+            }
+
+            input {
+                margin: 5px;
+            }
+
+            div {
+                width: 400px;
+                text-align: right;
+                background-color: #ff922bc5;
+                padding: 30px;
+                border-radius: 20px;
+                padding-top: 10px;
+                margin-left: 20px;
+            }
+
+            img {
+                position: relative;
+                top: 3px;
+            }
+
+        </style>
+    </head>
+    <body>
+        
+        <h1>Rent vs. Drive Calculator</h1>
+
+
+        <div>
+
+        <h2>Your Car's Data</h2>
+
+
+            <label> Current Value ($)
+                <input id = "worth" type = "text" value = 4500>
+                <img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Icon-round-Question_mark.svg/400px-Icon-round-Question_mark.svg.png" height="15" title="How much you could get for your car if you sold it now">
+            </label>
+            <br>
+            <label> Miles Left?
+                <input id = "milesLeft" type = "text" value = 90000>
+                <img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Icon-round-Question_mark.svg/400px-Icon-round-Question_mark.svg.png" height="15" title="How many more miles you estimate you will drive before you get rid of it">
+            </label>
+            <br>
+            <label> MPG
+                <input id = "yourMPG" type = "text" value = 41>
+                <img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Icon-round-Question_mark.svg/400px-Icon-round-Question_mark.svg.png" height="15" title="Your car's MPG">
+            </label>
+        
+
+        <h2>Rental Car Data</h2>
+
+       
+            <label> Rental Cost ($)
+                <input id = "rentalCost" type = "text" value = 103.53>
+                <img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Icon-round-Question_mark.svg/400px-Icon-round-Question_mark.svg.png" height="15" title="Total cost of a rental car">
+            </label>
+            <br>
+            <label> Expected MPG
+                <input id = "rentalMPG" type = "text" value = 35>
+                <img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Icon-round-Question_mark.svg/400px-Icon-round-Question_mark.svg.png" height="15" title="What you estimate the rental car's MPG to be">
+            </label>
+        
+
+        <h2>Trip Data</h2>
+
+                    <label> Expected Trip (Miles)
+                <input id = "tripMiles" type = "text" value = 822>
+            </label>
+            <br>
+            <label> Gas Cost ($)
+                <input id = "gasCost" type = "text" value = 2.15>
+            </label>
+        </div> 
+
+        <br>
+
+        <div>
+        <h2>Calculations</h2>
+
+        <h3 id = "pcpm">Personal Car Cost Per Mile ($): </h3>
+        <h3 id = "rcpm">Rental Car Cost Per Mile ($): </h3>
+        </div>
+
+
+
+        <script>
+            
+            var bodyEl = document.getElementsByTagName("body");
+
+            var calculateMyCar = function() {
+                var worth = document.getElementById("worth").value;
+                var milesLeft = document.getElementById("milesLeft").value;
+                var yourMpg = document.getElementById("yourMPG").value;
+                var miles = document.getElementById("tripMiles").value;
+                var gasCost = document.getElementById("gasCost").value;
+
+                // Calculate cost of using personal car
+                var yourPerMile = Math.round((worth/milesLeft + gasCost/yourMpg)*1000)/1000;
+                var yourCost = document.getElementById("pcpm");
+                yourCost.innerHTML = "Personal Car Cost Per Mile ($): "+ yourPerMile;
+
+
+                var rentalCost = document.getElementById("rentalCost").value;
+                var rentalMPG = document.getElementById("rentalMPG").value;
+
+                // Calculate cost of using rental car
+                var rentPerMile = Math.round((rentalCost/miles + gasCost/rentalMPG)*1000)/1000;
+                var rentalCost = document.getElementById("rcpm");
+                rentalCost.innerHTML = "Rental Car Cost Per Mile ($): "+ rentPerMile;
+
+            };
+            
+            //  Run the function to initialize the costs according to the default values
+            calculateMyCar();
+
+            // This will trigger the function to run anytime there is a key pressed on the page
+            document.addEventListener("keyup", calculateMyCar);
+            
+        </script>
+    </body>
+</html>
